@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The CITY family | Esthetic Beauty Salon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand:      #c4908c;
+    --brand-dark: #a37370;
+    --brand-deep: #5a2e2e;
+    --blush:      #e8cac6;
+    --pale:       #faf4f3;
+    --white:      #ffffff;
+    --text-main:  #3a2e2e;
+    --text-sub:   #8a6e6e;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--white);
+    color: var(--text-main);
+    font-weight: 300;
+    overflow-x: hidden;
+    
+  }
+
+  
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.4s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(90,46,46,0.92);
+    backdrop-filter: blur(8px);
+    padding: 16px 48px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--white);
+    text-decoration: none; 
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 11px; letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.82);
+    text-decoration: none; 
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--blush); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 100vh; min-height: 600px;
+    display: flex; align-items: flex-end;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #5a2e2e 0%, #a37370 40%, #c4908c 65%, #7a4040 100%);
+    will-change: transform;
+  }
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    top: -5%; left: 25%; width: 65%; height: 80%;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.12) 0%, transparent 65%);
+    animation: glow 7s ease-in-out infinite alternate;
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    bottom: 5%; right: 10%; width: 45%; height: 55%;
+    background: radial-gradient(ellipse, rgba(255,220,215,0.1) 0%, transparent 70%);
+    animation: glow 9s ease-in-out 2s infinite alternate;
+  }
+  @keyframes glow {
+    from { opacity: 0.5; transform: scale(1); }
+    to   { opacity: 1;   transform: scale(1.1); }
+  }
+
+  .hero-circle {
+    position: absolute;
+    right: 10%; top: 50%;
+    transform: translateY(-50%);
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.3);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .hero-circle .c-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 300;
+    color: var(--white); letter-spacing: 0.05em; line-height: 1;
+  }
+  .hero-circle .c-sub {
+    font-size: 11px; letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.75); margin-top: 8px;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 64px 80px;
+    max-width: 620px;
+  }
+  .hero-eyebrow {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px; letter-spacing: 0.42em;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 24px;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(50px, 7vw, 86px);
+    font-weight: 300; line-height: 1.08;
+    color: var(--white); margin-bottom: 28px;
+  }
+  .hero-title em { font-style: italic; color: var(--blush); }
+  /* 文字アニメ用 */
+  .char-wrap { overflow: hidden; display: inline-block; }
+  .char { display: inline-block; }
+
+  .hero-sub {
+    font-size: 13px; line-height: 2.1;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.07em; margin-bottom: 48px;
+  }
+  .hero-cta {
+    display: inline-block;
+    padding: 15px 44px;
+    border: 1px solid rgba(255,255,255,0.6);
+    color: var(--white); text-decoration: none;
+    font-size: 11px; letter-spacing: 0.3em;
+    transition: background 0.3s; 
+  }
+  .hero-cta:hover { background: rgba(255,255,255,0.15); }
+
+  /* CONCEPT */
+  .concept {
+    padding: 120px 64px;
+    text-align: center;
+    background: var(--pale);
+  }
+  .label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px; letter-spacing: 0.45em;
+    color: var(--brand); display: block; margin-bottom: 24px;
+  }
+  .concept h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 50px);
+    font-weight: 300; color: var(--text-main);
+    margin-bottom: 28px; line-height: 1.45;
+  }
+  .concept h2 em { font-style: italic; color: var(--brand); }
+  .concept p {
+    font-size: 14px; line-height: 2.3;
+    color: var(--text-sub);
+    max-width: 540px; margin: 0 auto;
+  }
+
+  /* LOCATIONS */
+  .locations { padding: 120px 64px; max-width: 1100px; margin: 0 auto; }
+  .section-head { text-align: center; margin-bottom: 64px; }
+  .section-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 300; color: var(--text-main);
+  }
+  .locations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .loc-card {
+    border: 1px solid var(--blush);
+    padding: 52px 44px;
+    position: relative; overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .loc-card:hover { box-shadow: 0 8px 40px rgba(196,144,140,0.18); }
+  .loc-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--brand), var(--blush));
+  }
+  .loc-city {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px; letter-spacing: 0.4em;
+    color: var(--brand); display: block; margin-bottom: 16px;
+  }
+  .loc-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 300;
+    color: var(--text-main); margin-bottom: 36px;
+  }
+  .loc-links { display: flex; flex-direction: column; gap: 12px; }
+  .loc-link {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 20px; background: var(--pale);
+    text-decoration: none; color: var(--text-main);
+    font-size: 13px; letter-spacing: 0.05em;
+    transition: background 0.25s, color 0.25s;
+    border-radius: 2px; 
+  }
+  .loc-link:hover { background: var(--brand); color: var(--white); }
+  .loc-link:hover svg { stroke: var(--white); }
+  .loc-link:hover .tiktok-icon { fill: var(--white); }
+  .link-icon { width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .link-icon svg { width: 18px; height: 18px; transition: stroke 0.25s; }
+  .tiktok-icon { fill: var(--text-main); transition: fill 0.25s; }
+  .link-arrow { margin-left: auto; font-size: 15px; color: var(--brand); opacity: 0.7; }
+  .loc-link:hover .link-arrow { color: var(--white); opacity: 1; }
+
+  /* ONLINE */
+  .online-section { background: var(--brand); padding: 100px 64px; text-align: center; }
+  .online-section .label { color: rgba(255,255,255,0.7); }
+  .online-section h2 {
+    font-size: 13px; font-weight: 300;
+    letter-spacing: 0.25em;
+    color: rgba(255,255,255,0.6); margin-bottom: 16px;
+  }
+  .online-section p { font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 52px; line-height: 2; }
+  .online-grid { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+  .online-btn {
+    display: flex; align-items: center; gap: 14px;
+    padding: 22px 48px;
+    border: 1px solid rgba(255,255,255,0.5);
+    text-decoration: none; color: var(--white);
+    font-size: 13px; letter-spacing: 0.15em;
+    transition: background 0.3s, border-color 0.3s;
+    min-width: 240px; justify-content: center; 
+  }
+  .online-btn:hover { background: rgba(255,255,255,0.15); border-color: var(--white); }
+  .online-btn svg { width: 20px; height: 20px; stroke: var(--white); }
+
+  /* FOOTER */
+  .footer-line { height: 1px; background: linear-gradient(90deg, transparent, var(--brand-dark), transparent); }
+  footer {
+    background: var(--brand-deep); padding: 52px 64px;
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 20px;
+  }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; letter-spacing: 0.25em; color: var(--white); }
+  .footer-logo span { display: block; font-size: 10px; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); margin-top: 4px; }
+  .footer-nav { display: flex; gap: 28px; list-style: none; }
+  .footer-nav a { font-size: 11px; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-decoration: none;  transition: color 0.2s; }
+  .footer-nav a:hover { color: var(--blush); }
+  .footer-copy { font-size: 11px; color: rgba(255,255,255,0.22); width: 100%; text-align: center; margin-top: 8px; }
+
+  @media (max-width: 768px) {
+    body { cursor: auto; }
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero-content { padding: 0 28px 60px; }
+    .hero-circle { display: none; }
+    .concept, .online-section { padding: 80px 28px; }
+    .locations { padding: 80px 28px; }
+    .locations-grid { grid-template-columns: 1fr; }
+    footer { padding: 40px 28px; flex-direction: column; align-items: flex-start; }
+    a { cursor: pointer !important; }
+  }
+</style>
+</head>
+<body>
+
+
+
+
+<nav id="nav">
+  <a href="#" class="nav-logo">The CITY family</a>
+  <ul class="nav-links">
+    <li><a href="#concept">CONCEPT</a></li>
+    <li><a href="#locations">LOCATIONS</a></li>
+    <li><a href="#online">ONLINE</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-circle" id="heroCircle">
+    <span class="c-title">The CITY</span>
+    <span class="c-sub">Esthetic Beauty Salon</span>
+  </div>
+  <div class="hero-content">
+    <span class="hero-eyebrow" id="heroEyebrow">TOKYO &amp; SAPPORO — ESTHETIC BEAUTY SALON</span>
+    <h1 class="hero-title" id="heroTitle">
+      <span class="title-line" id="titleLine1">Your skin,</span><br>
+      <em class="title-line" id="titleLine2">beautifully</em><br>
+      <span class="title-line" id="titleLine3">reborn.</span>
+    </h1>
+    <p class="hero-sub" id="heroSub">
+      The CITY family は、一人ひとりの肌と向き合う<br>都市型プレミアムエステサロンです。
+    </p>
+    <a href="#locations" class="hero-cta" id="heroCta">EXPLORE LOCATIONS</a>
+  </div>
+</section>
+
+<section class="concept" id="concept">
+  <div class="scroll-reveal">
+    <span class="label">— OUR CONCEPT</span>
+    <h2>美しさとは、<br><em>内側から</em>溢れるもの。</h2>
+    <p>表面だけの美しさではなく、肌本来のリズムを整え、<br>あなただけの輝きを引き出す。<br>上質な空間と確かな技術で、特別な時間をお届けします。</p>
+  </div>
+</section>
+
+<section class="locations" id="locations">
+  <div class="section-head scroll-reveal">
+    <span class="label">— OUR LOCATIONS</span>
+    <h2>店舗案内</h2>
+  </div>
+  <div class="locations-grid">
+    <div class="loc-card" id="cardTokyo">
+      <span class="loc-city">LOCATION 01</span>
+      <h3>Tokyo</h3>
+      <div class="loc-links">
+        <a href="#" class="loc-link"><span class="link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>予約サイト<span class="link-arrow">→</span></a>
+        <a href="#" class="loc-link"><span class="link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>Instagram<span class="link-arrow">→</span></a>
+        <a href="#" class="loc-link"><span class="link-icon"><svg viewBox="0 0 24 24" class="tiktok-icon"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.27 8.27 0 0 0 4.84 1.55V6.79a4.85 4.85 0 0 1-1.07-.1z"/></svg></span>TikTok<span class="link-arrow">→</span></a>
+      </div>
+    </div>
+    <div class="loc-card" id="cardSapporo">
+      <span class="loc-city">LOCATION 02</span>
+      <h3>Sapporo</h3>
+      <div class="loc-links">
+        <a href="#" class="loc-link"><span class="link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>ホットペッパー予約<span class="link-arrow">→</span></a>
+        <a href="#" class="loc-link"><span class="link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>Instagram<span class="link-arrow">→</span></a>
+        <a href="#" class="loc-link"><span class="link-icon"><svg viewBox="0 0 24 24" class="tiktok-icon"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.27 8.27 0 0 0 4.84 1.55V6.79a4.85 4.85 0 0 1-1.07-.1z"/></svg></span>TikTok<span class="link-arrow">→</span></a>
+        <a href="#" class="loc-link"><span class="link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></span>Google マップ<span class="link-arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="online-section" id="online">
+  <div class="scroll-reveal">
+    <span class="label">— ONLINE SERVICES</span>
+    <h2>オンラインサービス</h2>
+    <p>ご自宅にいながら、The CITY family のケアをお届けします。</p>
+    <div class="online-grid">
+      <a href="#" class="online-btn"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Online Store</a>
+      <a href="#" class="online-btn"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16"/><path d="M15 7a5 5 0 0 1 5 5M15 3a9 9 0 0 1 9 9"/></svg>Online Clinic</a>
+    </div>
+  </div>
+</section>
+
+<div class="footer-line"></div>
+<footer>
+  <div class="footer-logo">The CITY family<span>Esthetic Beauty Salon</span></div>
+  <ul class="footer-nav">
+    <li><a href="#concept">CONCEPT</a></li>
+    <li><a href="#locations">LOCATIONS</a></li>
+    <li><a href="#online">ONLINE</a></li>
+  </ul>
+  <p class="footer-copy">© 2024 The CITY family. All rights reserved.</p>
+</footer>
+
+<script>
+// GSAPが読み込まれているか確認してから実行
+window.addEventListener('load', function() {
+  if (typeof gsap === 'undefined') {
+    // GSAPなしフォールバック：全要素を即表示
+    document.querySelectorAll('.hero-eyebrow, #heroSub, #heroCta').forEach(el => el.style.opacity = 1);
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* =====================
+     ① HERO 行ごとフェードアップ
+  ===================== */
+  gsap.set('#heroEyebrow', { opacity: 0, y: 20 });
+  gsap.set('#titleLine1',  { opacity: 0, y: 40 });
+  gsap.set('#titleLine2',  { opacity: 0, y: 40 });
+  gsap.set('#titleLine3',  { opacity: 0, y: 40 });
+  gsap.set('#heroSub',     { opacity: 0, y: 20 });
+  gsap.set('#heroCta',     { opacity: 0, y: 16 });
+  gsap.set('#heroCircle',  { opacity: 0, scale: 0.88 });
+
+  const heroTl = gsap.timeline({ delay: 0.2 });
+  heroTl
+    .to('#heroEyebrow', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' })
+    .to('#titleLine1',  { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.3')
+    .to('#titleLine2',  { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.5')
+    .to('#titleLine3',  { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.5')
+    .to('#heroSub',     { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.3')
+    .to('#heroCta',     { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+    .to('#heroCircle',  { opacity: 1, scale: 1, duration: 1.0, ease: 'power2.out' }, '-=0.8');
+
+  /* =====================
+     ② PARALLAX（ScrollTrigger）
+  ===================== */
+  gsap.to('#heroBg', {
+    yPercent: 28,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1
+    }
+  });
+
+  /* スクロールリビール */
+  gsap.utils.toArray('.scroll-reveal').forEach(el => {
+    gsap.from(el, {
+      opacity: 0, y: 36,
+      duration: 0.9, ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      }
+    });
+  });
+
+  // カード左右スライド
+  gsap.from('#cardTokyo', {
+    opacity: 0, x: -50, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '#cardTokyo', start: 'top 85%' }
+  });
+  gsap.from('#cardSapporo', {
+    opacity: 0, x: 50, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '#cardSapporo', start: 'top 85%' }
+  });
+
+
+  window.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+    });
+    el.addEventListener('mouseleave', () => {
+    });
+  });
+
+  /* NAV */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+}); // end window.load
+</script>
+</body>
+</html>
